@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> -->
+    <title>{% block title %}Auctions{% endblock %}</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    
+    <!-- js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-custom navbar-mainbg">
+        <a class="navbar-brand navbar-logo" href="{% url 'index' %}">Autions</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector">
+                    <div class="left"></div>
+                    <div class="right"></div>
+                </div>
+                <li class="nav-item active" id='001'>
+                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item" id='002'>
+                    <a class="nav-link" href="{% url 'categories' %}">Categories</a>
+                </li>
+                <li class="nav-item" id='003'>
+                    <a class="nav-link" href="{% url 'watchlistpage' user.username %}">Watchlist<span
+                            class="badge badge-success">{{wcount}}</span></a>
+                </li>
+                <li class="nav-item" id='004'>
+                    <a class="nav-link" href="{% url 'create' %}">Create listing</a>
+                </li>
+                <li class="nav-item" id='005'>
+                    <a class="nav-link" href="{% url 'mywinnings' %}">Your Winnings<span
+                            class="badge badge-success">{{wonitems.count}}</span></a>
+                </li>
+                <li class="nav-item" id='006'>
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+                {% else %}
+                <li class="nav-item" id='007'>
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item" id='008'>
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div style="text-align: right;">
+        {% if user.is_authenticated %}
+        Signed in as <strong>{{ user.username }}</strong>.
+        {% else %}
+        Not signed in.
+        {% endif %}
+    </div>
+ 
+        {% block body %}
+
+        {% endblock %}
+    <script src="{% static 'auctions/custom.js' %}"></script>
+
+</body>
+
+</html>

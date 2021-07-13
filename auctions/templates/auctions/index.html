@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% for i in items %}
+<div class="container border" id="listings">
+    <div class="row">
+      <div class="col">
+        <img src="{{i.link}}" alt="image" style="width: 300px; height: auto">
+      </div>
+      <div class="col-md-8">
+
+        <div class="col text-left">
+          <h2 class="display-4">{{i.title}}</h2>
+          <h4>Price: ${{i.price}}</h4>
+          <p class="mt-3">Description: {{i.description}}</p>
+          <p><small>Created {{i.time}} by {{i.owner}}</small></p>
+          {% if user.is_authenticated %}
+          <a href="{% url 'listingpage' i.id %}" type="submit" class="btn btn-primary mb-3">Go To Listing</a>
+          {% else %}
+          <a href="{% url 'login' %}">Log in </a>to see details.
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- container -->
+<br>
+{% endfor %}
+{% endblock %}
